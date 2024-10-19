@@ -65,6 +65,7 @@ X_train = np.append(X_train_num, X_train_cat, axis=1)
 X_test = np.append(X_test_num, X_test_cat, axis=1)
 
 ##Evaluate Multiple Models
+#Training Model
 models={"Logistic Regression":LogisticRegression(),"KNN":KNeighborsClassifier(),"Decision Tree Classifier":DecisionTreeClassifier()}
 results=[]
 for model in models.values():
@@ -74,3 +75,4 @@ for model in models.values():
     plt.boxplot(results,labels=models.keys())
 
 
+#Testing Model
