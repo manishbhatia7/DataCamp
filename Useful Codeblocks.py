@@ -75,4 +75,9 @@ for model in models.values():
     plt.boxplot(results,labels=models.keys())
 
 
-#Testing Model
+#Testing Model Performance on Test Sets
+for name,model in models.items():
+    model.fit(X_train,y_train)
+    test_score=model.score(X_test,y_test)
+    print(name,test_score)
+
