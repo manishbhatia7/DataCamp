@@ -1,5 +1,7 @@
 # Check for Multicollinearity
-from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV, cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
 
 
 def correlation(dataset,threshold):
@@ -61,5 +63,14 @@ X_train_num = imp_num.fit_transform(X_train_num)
 X_test_num = imp_num.transform(X_test_num)
 X_train = np.append(X_train_num, X_train_cat, axis=1)
 X_test = np.append(X_test_num, X_test_cat, axis=1)
+
+##Evaluate Multiple Models
+models={"Logistic Regression":LogisticRegression(),"KNN":KNeighborsClassifier(),"Decision Tree Classifier":DecisionTreeClassifier()}
+results=[]
+for model in models.values():
+    kf=KFold(n_splits=5,random_state=10,shuffle=True)
+    cv_results=cross_val_score(model,X_train,y_train,cv=kf)
+    results.append(cv_results)
+    plt.boxplot(results,labels=models.keys())
 
 
