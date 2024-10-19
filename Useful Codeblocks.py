@@ -41,3 +41,25 @@ params = {"penalty": ["l1", "l2"],
          "tol": np.linspace(0.0001, 1.0, 50),
          "C": np.linspace(0.1,1.0,50),
          "class_weight": ["balanced", {0:0.8, 1:0.2}]}
+
+
+#Dropping missing data with 5% of values
+df.dropna(subset=['SalePrice'])
+
+#Imputation
+from sklearn.impute import SimpleImputerX_cat = music_df["genre"].values.reshape(-1, 1)
+X_num = music_df.drop(["genre", "popularity"], axis=1).values
+y = music_df["popularity"].values
+X_train_cat, X_test_cat, y_train, y_test = train_test_split(X_cat, y, test_size=0.2,random_state=12)
+X_train_num, X_test_num, y_train, y_test = train_test_split(X_num, y, test_size=0.2,random_state=12)
+imp_cat = SimpleImputer(strategy="most_frequent")
+X_train_cat = imp_cat.fit_transform(X_train_cat)
+X_test_cat = imp_cat.transform(X_test_cat)
+
+imp_num = SimpleImputer()
+X_train_num = imp_num.fit_transform(X_train_num)
+X_test_num = imp_num.transform(X_test_num)
+X_train = np.append(X_train_num, X_train_cat, axis=1)
+X_test = np.append(X_test_num, X_test_cat, axis=1)
+
+
