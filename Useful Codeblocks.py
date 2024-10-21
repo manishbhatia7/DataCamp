@@ -99,3 +99,12 @@ y_pred = tuning.predict(X_test)
 
 # Compute and print performance
 print("Tuned Logistic Regression Parameters: {}, Accuracy: {}".format(tuning.best_params_,tuning.score(X_test,y_test)))
+
+#TSNE
+from matplotlib.pyplot import plt
+from sklearn.manifold import TSNE
+model=TSNE(learning_rate=100)
+transformed=model.fit_transform(samples)
+xs=transformed[:,0]
+ys=transformed[:,1]
+plt.scatter(xs,ys)
