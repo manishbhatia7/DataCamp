@@ -99,3 +99,23 @@ y_pred = tuning.predict(X_test)
 
 # Compute and print performance
 print("Tuned Logistic Regression Parameters: {}, Accuracy: {}".format(tuning.best_params_,tuning.score(X_test,y_test)))
+
+#Select the best best cluster for K Means
+ks = range(1, 6)
+inertias = []
+
+for k in ks:
+    model = KMeans(n_clusters=k)
+    model.fit(samples)
+    inertias.append(model.inertia_)
+plt.plot(ks, inertias, '-o')
+
+#Plot the dendrogram
+from scipy.cluster.hierarchy import linkage,dendrogram
+import matplotlib.pyplot as plt
+mergings = linkage(samples,method='complete')
+dendrogram(mergings,
+           labels=varieties,
+           leaf_rotation=90,
+           leaf_font_size=6,
+)
