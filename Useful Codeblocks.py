@@ -108,3 +108,4 @@ transformed=model.fit_transform(samples)
 xs=transformed[:,0]
 ys=transformed[:,1]
 plt.scatter(xs,ys)
+Test
