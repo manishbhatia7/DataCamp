@@ -108,3 +108,6 @@ transformed=model.fit_transform(samples)
 xs=transformed[:,0]
 ys=transformed[:,1]
 plt.scatter(xs,ys)
+
+#Transforming Categorical Variables using pandas and prefixing with a specific variable
+df = pd.get_dummies(penguins_clean).drop("sex_.", axis=1)
