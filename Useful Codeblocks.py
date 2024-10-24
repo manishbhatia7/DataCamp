@@ -111,3 +111,12 @@ plt.scatter(xs,ys)
 
 #Transforming Categorical Variables using pandas and prefixing with a specific variable
 df = pd.get_dummies(penguins_clean).drop("sex_.", axis=1)
+
+#Detecting the optimal no of clusters using Kmeans
+inertia = []
+for k in range(1, 10):
+    kmeans = KMeans(n_clusters=k, random_state=42).fit(penguins_preprocessed)
+    inertia.append(kmeans.inertia_)
+plt.plot(range(1, 10), inertia, marker='o')
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
