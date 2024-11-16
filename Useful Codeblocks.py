@@ -120,3 +120,34 @@ for k in range(1, 10):
 plt.plot(range(1, 10), inertia, marker='o')
 plt.xlabel('Number of clusters')
 plt.ylabel('Inertia')
+
+#Calculate Floor
+nobel['decade']=(np.floor(nobel['year'] / 10) * 10).astype(int)
+
+#Defining threshold for missing values ideally it is 5%
+threshold=len(col)*0.05
+cols_to_drop=df.columns[df.isna().sum()<=threshold]
+df.dropna(subset=cols_to_drop, inplace=True)
+
+#Imputing a Summary Statistic
+cols_with_missing_values=df.columns[df.isna().sum()>0]
+for col in cols_with_missing_values:
+    df[col].fillna(df[col].mean())
+
+
+    #Feature Selection using Lasso
+    # Specify L1 regularization
+    lr = LogisticRegression(solver='liblinear', penalty='l1')
+
+    # Instantiate the GridSearchCV object and run the search
+    searcher = GridSearchCV(lr, {'C': [0.001, 0.01, 0.1, 1, 10]})
+    searcher.fit(X_train, y_train)
+
+    # Report the best parameters
+    print("Best CV params", searcher.best_params_)
+
+    # Find the number of nonzero coefficients (selected features)
+    best_lr = searcher.best_estimator_
+    coefs = best_lr.coef_
+    print("Total number of features:", coefs.size)
+    print("Number of selected features:", np.count_nonzero(coefs))
